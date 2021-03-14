@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="119,173,0,0" VerticalAlignment="Top" Height="21" Width="121" Click="CreateNewGoodButton_Click"/>
+        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="119,217,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
 
     </Grid>
 </Window>
