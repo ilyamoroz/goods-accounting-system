@@ -27,16 +27,15 @@ namespace Goods_accounting_system
             InitializeComponent();
 
             FillGoodsDataGrid();
-            //CreateButton(GoodsDataGrid, "Elfkbnm");
-
-
-
-
-            ProvidersDataGrid.ItemsSource = db.GetAllProviders();
+            FillProvidersGrid();
         }
         private void FillGoodsDataGrid()
         {
             GoodsDataGrid.ItemsSource = db.GetAllGoods();
+        }
+        private void FillProvidersGrid()
+        {
+            ProvidersDataGrid.ItemsSource = db.GetAllProviders();
         }
         private void CreateNewGoodButton_Click(object sender, RoutedEventArgs e)
         {
@@ -44,24 +43,11 @@ namespace Goods_accounting_system
             createGood.ShowDialog();
             FillGoodsDataGrid();
         }
-
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)
         {
             CreateProvider createProvider = new CreateProvider();
             createProvider.ShowDialog();
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (GoodsDataGrid.SelectedIndex > 0)
-            {
-                using (ShopDatabaseContext context = new ShopDatabaseContext())
-                {
-                    List<Good> goods = context.Goods.ToList<Good>();
-                    db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
-                    FillGoodsDataGrid();
-                }
-            }       
+            FillProvidersGrid();
         }
 
         private void GoodEditButton_Click(object sender, RoutedEventArgs e)
@@ -75,8 +61,43 @@ namespace Goods_accounting_system
                     edit.ShowDialog();
                     FillGoodsDataGrid();
                 }
-                
-                
+            }
+        }
+        private void ProviderDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProvidersDataGrid.SelectedIndex > 0)
+            {
+                using (ShopDatabaseContext context = new ShopDatabaseContext())
+                {
+                    List<Provider> providers = context.Providers.ToList();
+                    db.DeleteProvider(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                    FillProvidersGrid();
+                }
+            }
+        }
+        private void DeleteGoodButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (GoodsDataGrid.SelectedIndex > 0)
+            {
+                using (ShopDatabaseContext context = new ShopDatabaseContext())
+                {
+                    List<Good> goods = context.Goods.ToList<Good>();
+                    db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
+                    FillGoodsDataGrid();
+                }
+            }
+        }
+        private void ProviderEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProvidersDataGrid.SelectedIndex >= 0)
+            {
+                using (ShopDatabaseContext context = new ShopDatabaseContext())
+                {
+                    List<Provider> providers = context.Providers.ToList();
+                    EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                    edit.ShowDialog();
+                    FillProvidersGrid();
+                }
             }
         }
     }

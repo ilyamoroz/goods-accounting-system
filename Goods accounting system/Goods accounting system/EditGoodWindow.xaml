@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Goods_accounting_system"
         mc:Ignorable="d"
-        Title="EditGoodWindow" Height="450" Width="800" >
+        Title="EditGoodWindow" Height="395" Width="444" >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="341*"/>
-            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="GoodNameField" HorizontalAlignment="Left" Margin="357,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="GoodPlaceField" HorizontalAlignment="Left" Margin="366,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="GoodAmountField" HorizontalAlignment="Left" Margin="382,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="SaveGoodButton" Content="Save" HorizontalAlignment="Left" Margin="400,334,0,0" VerticalAlignment="Top" Click="SaveGoodButton_Click"/>
+        <TextBox x:Name="GoodNameField" HorizontalAlignment="Left" Margin="253,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox x:Name="GoodPlaceField" HorizontalAlignment="Left" Margin="253,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox x:Name="GoodAmountField" HorizontalAlignment="Left" Margin="253,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <Button x:Name="SaveGoodButton" Content="Save" HorizontalAlignment="Center" Margin="0,291,0,0" VerticalAlignment="Top" Click="SaveGoodButton_Click" Height="27" Width="92"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="104,111,0,0" VerticalAlignment="Top"/>
+        <Label Content="Storage PLace" HorizontalAlignment="Left" Margin="88,148,0,0" VerticalAlignment="Top"/>
+        <Label Content="Amount" HorizontalAlignment="Left" Margin="104,191,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

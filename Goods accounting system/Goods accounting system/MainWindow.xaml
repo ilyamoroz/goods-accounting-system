@@ -5,15 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Goods_accounting_system"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" SizeToContent="Manual" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="58,86,0,0" VerticalAlignment="Top" Height="21" Width="122" Click="CreateNewGoodButton_Click"/>
-        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="58,150,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
-        <TabControl Margin="185,10,0,0">
+        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="21" Width="122" Click="CreateNewGoodButton_Click"/>
+        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
+        <TabControl Margin="185,0,0,10">
             <TabItem Header="Goods">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="GoodsDataGrid" Margin="0,0,0,41"/>
-                    <Button x:Name="GoodEditButton" Content="Edit" HorizontalAlignment="Left" Margin="411,355,0,0" VerticalAlignment="Top" Click="GoodEditButton_Click"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="526*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="GoodsDataGrid" Margin="0,0,0,46" Grid.ColumnSpan="3"/>
+                    <Button x:Name="GoodEditButton" Content="Edit" HorizontalAlignment="Left" Margin="279,335,0,0" VerticalAlignment="Top" Click="GoodEditButton_Click" Height="30" Width="100
+                            " Grid.Column="2"/>
+                    <Button x:Name="DeleteGoodButton" Content="Delete" Grid.Column="2" HorizontalAlignment="Left" Margin="379,335,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="DeleteGoodButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Providers">
@@ -22,11 +29,12 @@
                         <ColumnDefinition Width="16*"/>
                         <ColumnDefinition Width="593*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="ProvidersDataGrid" Grid.Column="1"/>
+                    <DataGrid x:Name="ProvidersDataGrid" Grid.ColumnSpan="2" Margin="0,1,0,55"/>
+                    <Button x:Name="ProviderEditButton" Content="Edit" Grid.Column="1" HorizontalAlignment="Left" Margin="279,335,0,0" VerticalAlignment="Top" Click="ProviderEditButton_Click" Width="100" Height="30"/>
+                    <Button x:Name="ProviderDeleteButton" Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="379,335,0,0" VerticalAlignment="Top" Click="ProviderDeleteButton_Click" Height="30" Width="100"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="718,389,0,0" VerticalAlignment="Top" Click="DeleteButton_Click"/>
 
     </Grid>
 </Window>

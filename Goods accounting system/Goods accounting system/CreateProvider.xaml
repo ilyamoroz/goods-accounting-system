@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Goods_accounting_system"
         mc:Ignorable="d"
-        Title="CreateProvider" Height="450" Width="800">
+        Title="CreateProvider" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="CreateNewProviderButton" Content="Add new" HorizontalAlignment="Left" Margin="271,296,0,0" VerticalAlignment="Top" Click="CreateNewProviderButton_Click"/>
         <TextBox x:Name="ProviderNameField" HorizontalAlignment="Left" Margin="322,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="ProviderAddressField" HorizontalAlignment="Left" Margin="322,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="ProviderPhoneNumberField" HorizontalAlignment="Left" Margin="322,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="204,128,0,0" VerticalAlignment="Top"/>
+        <Label Content="Address" HorizontalAlignment="Left" Margin="204,166,0,0" VerticalAlignment="Top"/>
+        <Label Content="Phone number" HorizontalAlignment="Left" Margin="204,209,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

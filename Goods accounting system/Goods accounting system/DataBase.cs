@@ -83,7 +83,7 @@ namespace Goods_accounting_system
                 return good;
             }
         }
-        public void EditGoodByID(int id, string name, int place, int amount)
+        public void EditGood(int id, string name, int place, int amount)
         {
             using (ShopDatabaseContext context = new ShopDatabaseContext())
             {
@@ -91,6 +91,35 @@ namespace Goods_accounting_system
                 good.Name = name;
                 good.StoragePlace = place;
                 good.Amount = amount;
+                context.SaveChanges();
+            }
+        }
+        public void DeleteProvider(int id)
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var z = context.Providers.Single(x => x.ProviderID == id);
+                context.Providers.Remove(z);
+                context.SaveChanges();
+            }
+
+        }
+        public Provider GetProviderByID(int id)
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var provider = context.Providers.Single(x => x.ProviderID == id);
+                return provider;
+            }
+        }
+        public void EditProvider(int id, string name, string address, string phone)
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var provider = context.Providers.Single(x => x.ProviderID == id);
+                provider.Name = name;
+                provider.Address = address;
+                provider.PhoneNumber = phone;
                 context.SaveChanges();
             }
         }

@@ -42,11 +42,12 @@ namespace Goods_accounting_system
 
         private void SaveGoodButton_Click(object sender, RoutedEventArgs e)
         {
-            db.EditGoodByID(GoodId, GoodNameField.Text, Convert.ToInt32(GoodPlaceField.Text), Convert.ToInt32(GoodAmountField.Text));
+            db.EditGood(GoodId, GoodNameField.Text, Convert.ToInt32(GoodPlaceField.Text), Convert.ToInt32(GoodAmountField.Text));
             MessageBox.Show("Data Changed");
             GoodNameField.Text = "";
             GoodPlaceField.Text = "";
             GoodAmountField.Text = "";
+            this.Close();
         }
     }
 }
