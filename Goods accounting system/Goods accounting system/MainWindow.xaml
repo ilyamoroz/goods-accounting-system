@@ -7,8 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="119,173,0,0" VerticalAlignment="Top" Height="21" Width="121" Click="CreateNewGoodButton_Click"/>
-        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="119,217,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
+        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="58,86,0,0" VerticalAlignment="Top" Height="21" Width="122" Click="CreateNewGoodButton_Click"/>
+        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="58,150,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
+        <TabControl Margin="185,10,0,0">
+            <TabItem Header="Goods">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="GoodsDataGrid" Margin="0,0,0,41"/>
+                    <Button x:Name="GoodEditButton" Content="Edit" HorizontalAlignment="Left" Margin="411,355,0,0" VerticalAlignment="Top" Click="GoodEditButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Providers">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16*"/>
+                        <ColumnDefinition Width="593*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="ProvidersDataGrid" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="718,389,0,0" VerticalAlignment="Top" Click="DeleteButton_Click"/>
 
     </Grid>
 </Window>
