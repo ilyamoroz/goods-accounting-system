@@ -142,5 +142,43 @@ namespace Goods_accounting_system
 
             }
         }
+        public IEnumerable<object> GetNeedGoods()
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var s = from e in context.Goods
+                    where e.Amount <= 10
+                    join d in context.Providers
+                        on e.ProviderID equals d.ProviderID
+                    select new
+                    {
+                        GoodName = e.Name,
+                        GoodAmount = e.Amount,
+                        StoragePlace = e.StoragePlace,
+                        ProviderName = d.Name
+                    };
+                return s.ToList();
+
+            }
+        }
+        public IEnumerable<object> GetGoodsByProvider(string provider)
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var s = from e in context.Goods
+                    join d in context.Providers
+                        on e.ProviderID equals d.ProviderID
+                    where d.Name.StartsWith(provider)
+                    select new
+                    {
+                        GoodName = e.Name,
+                        GoodAmount = e.Amount,
+                        StoragePlace = e.StoragePlace,
+                        ProviderName = d.Name
+                    };
+                return s.ToList();
+
+            }
+        }
     }
 }

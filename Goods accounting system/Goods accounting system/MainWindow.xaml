@@ -24,8 +24,11 @@
                     <Button x:Name="DeleteGoodButton" Content="Delete" Grid.Column="2" HorizontalAlignment="Left" Margin="379,335,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="DeleteGoodButton_Click"/>
                     <ComboBox x:Name="FilterBox" Grid.Column="2" HorizontalAlignment="Left" Margin="393,-5,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="FilterBox_DropDownClosed">
                         <ComboBoxItem Content="All Goods"/>
+                        <ComboBoxItem Content="Goods by provider"/>
+                        <ComboBoxItem Content="Necessary goods"/>
                         <ComboBoxItem Content="Avalible Goods"/>
                     </ComboBox>
+                    <TextBox x:Name="ProviderNameField" Grid.Column="2" HorizontalAlignment="Left" Margin="273,-3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="20" IsEnabled="False" Visibility="Hidden" TextChanged="ProviderNameField_TextChanged"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="providers" Header="Providers" HorizontalAlignment="Right" Margin="0,-2,-2,-2" Width="82">

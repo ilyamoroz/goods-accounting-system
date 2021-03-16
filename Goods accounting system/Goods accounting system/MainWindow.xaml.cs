@@ -114,6 +114,8 @@ namespace Goods_accounting_system
         }
         private void FilterBox_DropDownClosed(object sender, EventArgs e)
         {
+            ProviderNameField.IsEnabled = false;
+            ProviderNameField.Visibility = Visibility.Hidden;
             switch (FilterBox.Text)
             {
                 case "All Goods":
@@ -122,7 +124,19 @@ namespace Goods_accounting_system
                 case "Avalible Goods":
                     GoodsDataGrid.ItemsSource = db.GetAvailableGoods();
                     break;
+                case "Necessary goods":
+                    GoodsDataGrid.ItemsSource = db.GetNeedGoods();
+                    break;
+                case "Goods by provider":
+                    ProviderNameField.IsEnabled = true;
+                    ProviderNameField.Visibility = Visibility.Visible;
+                    break;
             }
+        }
+
+        private void ProviderNameField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            GoodsDataGrid.ItemsSource = db.GetGoodsByProvider(ProviderNameField.Text);
         }
     }
 }
