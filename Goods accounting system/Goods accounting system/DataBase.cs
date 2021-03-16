@@ -123,5 +123,24 @@ namespace Goods_accounting_system
                 context.SaveChanges();
             }
         }
+        public IEnumerable<object> GetAvailableGoods()
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var s = from e in context.Goods
+                    where e.Amount >= 1 
+                    join d in context.Providers
+                        on e.ProviderID equals d.ProviderID
+                    select new
+                    {
+                        GoodName = e.Name,
+                        GoodAmount = e.Amount,
+                        StoragePlace = e.StoragePlace,
+                        ProviderName = d.Name
+                    };
+                return s.ToList();
+
+            }
+        }
     }
 }

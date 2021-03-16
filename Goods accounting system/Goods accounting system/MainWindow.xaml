@@ -7,23 +7,28 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" SizeToContent="Manual" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="21" Width="122" Click="CreateNewGoodButton_Click"/>
-        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
+        <Button x:Name="CreateNewGoodButton" Content="Create new good" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="21" Width="121" Click="CreateNewGoodButton_Click"/>
+        <Button x:Name="CreateNewProviderButton" Content="Create new provider" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="121" Click="CreateNewProviderButton_Click"/>
+        <Button Content="Print" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Width="121" Click="Button_Click"/>
         <TabControl Margin="185,0,0,10">
-            <TabItem Header="Goods">
+            <TabItem x:Name="goods" Header="Goods">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="68*"/>
                         <ColumnDefinition Width="15*"/>
                         <ColumnDefinition Width="526*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="GoodsDataGrid" Margin="0,0,0,46" Grid.ColumnSpan="3"/>
+                    <DataGrid x:Name="GoodsDataGrid" Margin="0,24,0,46" Grid.ColumnSpan="3"/>
                     <Button x:Name="GoodEditButton" Content="Edit" HorizontalAlignment="Left" Margin="279,335,0,0" VerticalAlignment="Top" Click="GoodEditButton_Click" Height="30" Width="100
                             " Grid.Column="2"/>
                     <Button x:Name="DeleteGoodButton" Content="Delete" Grid.Column="2" HorizontalAlignment="Left" Margin="379,335,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="DeleteGoodButton_Click"/>
+                    <ComboBox x:Name="FilterBox" Grid.Column="2" HorizontalAlignment="Left" Margin="393,-5,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="FilterBox_DropDownClosed">
+                        <ComboBoxItem Content="All Goods"/>
+                        <ComboBoxItem Content="Avalible Goods"/>
+                    </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Providers">
+            <TabItem x:Name="providers" Header="Providers" HorizontalAlignment="Right" Margin="0,-2,-2,-2" Width="82">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="16*"/>
