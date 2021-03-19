@@ -8,12 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataModel\" />
+    <None Remove="cart.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="cart.png" />
   </ItemGroup>
 
 </Project>

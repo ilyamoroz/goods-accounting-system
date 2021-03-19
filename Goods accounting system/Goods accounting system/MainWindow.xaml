@@ -43,6 +43,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Image HorizontalAlignment="Left" Height="40" Margin="10,92,0,0" VerticalAlignment="Top" Width="40" Source="/cart.png" MouseDown="btnMouseDown"/>
 
     </Grid>
 </Window>

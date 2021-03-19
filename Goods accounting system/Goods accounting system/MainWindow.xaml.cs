@@ -18,6 +18,7 @@ namespace Goods_accounting_system
     public partial class MainWindow : Window
     {
         private DataBase db = new DataBase();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,20 +26,24 @@ namespace Goods_accounting_system
             FillGoodsDataGrid();
             FillProvidersGrid();
         }
+
         private void FillGoodsDataGrid()
         {
             GoodsDataGrid.ItemsSource = db.GetAllGoods();
         }
+
         private void FillProvidersGrid()
         {
             ProvidersDataGrid.ItemsSource = db.GetAllProviders();
         }
+
         private void CreateNewGoodButton_Click(object sender, RoutedEventArgs e)
         {
             CreateGood createGood = new CreateGood();
             createGood.ShowDialog();
             FillGoodsDataGrid();
         }
+
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)
         {
             CreateProvider createProvider = new CreateProvider();
@@ -59,6 +64,7 @@ namespace Goods_accounting_system
                 }
             }
         }
+
         private void ProviderDeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (ProvidersDataGrid.SelectedIndex > 0)
@@ -71,6 +77,7 @@ namespace Goods_accounting_system
                 }
             }
         }
+
         private void DeleteGoodButton_Click(object sender, RoutedEventArgs e)
         {
             if (GoodsDataGrid.SelectedIndex > 0)
@@ -83,6 +90,7 @@ namespace Goods_accounting_system
                 }
             }
         }
+
         private void ProviderEditButton_Click(object sender, RoutedEventArgs e)
         {
             if (ProvidersDataGrid.SelectedIndex >= 0)
@@ -90,12 +98,14 @@ namespace Goods_accounting_system
                 using (ShopDatabaseContext context = new ShopDatabaseContext())
                 {
                     List<Provider> providers = context.Providers.ToList();
-                    EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                    EditProviderWindow edit =
+                        new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
                     edit.ShowDialog();
                     FillProvidersGrid();
                 }
             }
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -112,6 +122,7 @@ namespace Goods_accounting_system
                 this.IsEnabled = true;
             }
         }
+
         private void FilterBox_DropDownClosed(object sender, EventArgs e)
         {
             ProviderNameField.IsEnabled = false;
@@ -137,6 +148,13 @@ namespace Goods_accounting_system
         private void ProviderNameField_TextChanged(object sender, TextChangedEventArgs e)
         {
             GoodsDataGrid.ItemsSource = db.GetGoodsByProvider(ProviderNameField.Text);
+        }
+
+        private void btnMouseDown(object sender, RoutedEventArgs e)
+        {
+            db.Create_Cart();
+            OrderWindow orderWindow = new OrderWindow();
+            orderWindow.ShowDialog();
         }
     }
 }

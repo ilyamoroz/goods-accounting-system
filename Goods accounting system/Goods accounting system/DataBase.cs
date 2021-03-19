@@ -1,4 +1,5 @@
-﻿using Goods_accounting_system.DataModel;
+﻿using System;
+using Goods_accounting_system.DataModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -20,7 +21,6 @@ namespace Goods_accounting_system
                 context.SaveChanges();
             }
         }
-
         public void CreateNewProvider(string name, string address, string phoneNumber)
         {
             using (ShopDatabaseContext context = new ShopDatabaseContext())
@@ -179,6 +179,34 @@ namespace Goods_accounting_system
                 return s.ToList();
 
             }
+        }
+
+        public void Create_Cart()
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                Cart cart = new Cart();
+                cart.Date = DateTime.Now.ToShortDateString();
+                context.Carts.Add(cart);
+                context.SaveChanges();
+
+            }
+        }
+        public void MakeOrder(int goodID, int amount)
+        {
+            using (ShopDatabaseContext context = new ShopDatabaseContext())
+            {
+                var _cartID = context.Carts.ToList<Cart>().Last().CartID;
+
+
+                Order order = new Order();
+                order.GoodID = goodID;
+                order.Amount = amount;
+                order.CartId = _cartID;
+                context.Orders.Add(order);
+                context.SaveChanges();
+            }
+
         }
     }
 }
