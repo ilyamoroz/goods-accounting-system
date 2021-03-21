@@ -34,7 +34,6 @@ namespace Goods_accounting_system
 
                 if (amount > 0 && amount < 10000)
                 {
-                    MessageBox.Show("LOLLLLLL");
                     using (ShopDatabaseContext context = new ShopDatabaseContext())
                     {
                         List<Good> goods = context.Goods.ToList<Good>();
