@@ -12,13 +12,15 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class OrderWindow : Window
     {
+        private ShopDatabaseContext context = new ShopDatabaseContext();
+        private DataBase db = new DataBase();
+        
         public OrderWindow()
         {
             InitializeComponent();
             FillDataGrid();
         }
 
-        private DataBase db = new DataBase();
 
         private void FillDataGrid()
         {
@@ -34,11 +36,8 @@ namespace Goods_accounting_system
 
                 if (amount > 0 && amount < 10000)
                 {
-                    using (ShopDatabaseContext context = new ShopDatabaseContext())
-                    {
-                        List<Good> goods = context.Goods.ToList<Good>();
-                        db.MakeOrder(goods[indexList.Last()].GoodID, amount);
-                    }
+                    List<Good> goods = context.Goods.ToList<Good>();
+                    db.MakeOrder(goods[indexList.Last()].GoodID, amount);
                 }
             }
             catch (Exception exception)

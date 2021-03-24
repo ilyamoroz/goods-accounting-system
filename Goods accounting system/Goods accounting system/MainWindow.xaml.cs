@@ -20,6 +20,8 @@ namespace Goods_accounting_system
     {
         private DataBase db = new DataBase();
 
+        private ShopDatabaseContext context = new ShopDatabaseContext();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -60,14 +62,11 @@ namespace Goods_accounting_system
         {
             if (GoodsDataGrid.SelectedIndex >= 0)
             {
-                using (ShopDatabaseContext context = new ShopDatabaseContext())
-                {
-                    List<Good> goods = context.Goods.ToList();
-                    EditGoodWindow edit = new EditGoodWindow(goods[GoodsDataGrid.SelectedIndex].GoodID);
-                    edit.ShowDialog();
-                    Log.Information($"Edit good: {goods[GoodsDataGrid.SelectedIndex].Name}");
-                    FillGoodsDataGrid();
-                }
+                List<Good> goods = context.Goods.ToList();
+                EditGoodWindow edit = new EditGoodWindow(goods[GoodsDataGrid.SelectedIndex].GoodID);
+                edit.ShowDialog();
+                Log.Information("Edit good: {Name}", goods[GoodsDataGrid.SelectedIndex].Name);
+                FillGoodsDataGrid();
             }
         }
 
@@ -75,13 +74,10 @@ namespace Goods_accounting_system
         {
             if (ProvidersDataGrid.SelectedIndex > 0)
             {
-                using (ShopDatabaseContext context = new ShopDatabaseContext())
-                {
-                    List<Provider> providers = context.Providers.ToList();
-                    db.DeleteProvider(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
-                    Log.Information($"Deleted provider: {providers[ProvidersDataGrid.SelectedIndex].Name}");
-                    FillProvidersGrid();
-                }
+                List<Provider> providers = context.Providers.ToList();
+                db.DeleteProvider(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                Log.Information("Deleted provider: {Name}", providers[ProvidersDataGrid.SelectedIndex].Name);
+                FillProvidersGrid();
             }
         }
 
@@ -89,13 +85,10 @@ namespace Goods_accounting_system
         {
             if (GoodsDataGrid.SelectedIndex > 0)
             {
-                using (ShopDatabaseContext context = new ShopDatabaseContext())
-                {
-                    List<Good> goods = context.Goods.ToList<Good>();
-                    db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
-                    Log.Information($"Deleted good: {goods[GoodsDataGrid.SelectedIndex].Name}");
-                    FillGoodsDataGrid();
-                }
+                List<Good> goods = context.Goods.ToList<Good>();
+                db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
+                Log.Information("Deleted good: {Name}", goods[GoodsDataGrid.SelectedIndex].Name);
+                FillGoodsDataGrid();
             }
         }
 
@@ -103,14 +96,11 @@ namespace Goods_accounting_system
         {
             if (ProvidersDataGrid.SelectedIndex >= 0)
             {
-                using (ShopDatabaseContext context = new ShopDatabaseContext())
-                {
-                    List<Provider> providers = context.Providers.ToList();
-                    EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
-                    edit.ShowDialog();
-                    Log.Information($"Edit provider: {providers[ProvidersDataGrid.SelectedIndex].Name}");
-                    FillProvidersGrid();
-                }
+                List<Provider> providers = context.Providers.ToList();
+                EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                edit.ShowDialog();
+                Log.Information("Edit provider: {Name}", providers[ProvidersDataGrid.SelectedIndex].Name);
+                FillProvidersGrid();
             }
         }
 
