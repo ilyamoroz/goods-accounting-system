@@ -10,12 +10,12 @@
         <TextBox x:Name="GoodNameField" HorizontalAlignment="Center" Margin="0,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="GoodPlaceField" HorizontalAlignment="Center" Margin="0,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="GoodAmountField" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-        <TextBox x:Name="GoodProviderField" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,249,0,0"/>
         <Button x:Name="CreateGoodButton" Content="Add" HorizontalAlignment="Left" Margin="327,330,0,0" VerticalAlignment="Top" Click="CreateGoodButton_Click" Width="83"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="203,117,0,0" VerticalAlignment="Top"/>
         <Label Content="Storage Place" HorizontalAlignment="Left" Margin="203,159,0,0" VerticalAlignment="Top"/>
         <Label Content="Amount" HorizontalAlignment="Left" Margin="203,200,0,0" VerticalAlignment="Top"/>
         <Label Content="Provider" HorizontalAlignment="Left" Margin="203,241,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="GoodProviderField" HorizontalAlignment="Center" Margin="0,243,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

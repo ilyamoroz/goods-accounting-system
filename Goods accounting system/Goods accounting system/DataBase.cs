@@ -1,6 +1,7 @@
 ﻿using System;
 using Goods_accounting_system.DataModel;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Windows;
 
@@ -10,13 +11,17 @@ namespace Goods_accounting_system
     {
         private ShopDatabaseContext context = new ShopDatabaseContext();
 
-        public void CreateNewGood(string name, int place, int amount, int provider)
+        public void CreateNewGood(string name, int place, int amount, string provider)
         {
             Good good = new Good();
             good.Name = name;
             good.StoragePlace = place;
             good.Amount = amount;
-            good.ProviderID = provider;
+            if (provider.Length > 0)
+            {
+                good.ProviderID = context.Providers.Single(x => x.Name == provider).ProviderID;
+            }
+
             context.Goods.Add(good);
             context.SaveChanges();
         }
@@ -159,6 +164,10 @@ namespace Goods_accounting_system
             order.CartId = _cartID;
             context.Orders.Add(order);
             context.SaveChanges();
+        }
+        public IEnumerable<object> FillComboBox()
+        { 
+            return (from e in context.Providers select e.Name).ToList();
         }
     }
 }

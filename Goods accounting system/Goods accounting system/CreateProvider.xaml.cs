@@ -25,9 +25,22 @@ namespace Goods_accounting_system
 
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)
         {
-            db.CreateNewProvider(ProviderNameField.Text, 
-                ProviderAddressField.Text, 
-                ProviderPhoneNumberField.Text);
+            if (ProviderNameField.Text.Length >= 3 &&
+                ProviderNameField.Text.Length <= 20 &&
+                ProviderAddressField.Text.Length >= 4 &&
+                ProviderAddressField.Text.Length <= 50 &&
+                ProviderPhoneNumberField.Text.Length == 10)
+            {
+                db.CreateNewProvider(ProviderNameField.Text,
+                    ProviderAddressField.Text,
+                    ProviderPhoneNumberField.Text);
+            }
+            else
+            {
+                MessageBox.Show("Enter correct values!");
+            }
+            this.Close();
+            
         }
     }
 }
