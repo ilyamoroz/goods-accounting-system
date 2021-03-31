@@ -8,7 +8,6 @@ namespace Goods_accounting_system.DataModel
         public string Name { get; set; }
         public int StoragePlace { get; set; }
         public int Amount { get; set; }
-        [AllowNull]
         public int ProviderID { get; set; }
         public virtual Provider provider { get; set; }
     }

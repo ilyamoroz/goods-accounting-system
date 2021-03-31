@@ -1,9 +1,7 @@
 ﻿using System;
 using Goods_accounting_system.DataModel;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Windows;
 
 namespace Goods_accounting_system
 {
@@ -33,7 +31,7 @@ namespace Goods_accounting_system
             provider.PhoneNumber = phoneNumber;
             context.Providers.Add(provider);
             context.SaveChanges();
-            }
+        }
         public IEnumerable<object> GetAllGoods()
         {
             var s = from e in context.Goods
