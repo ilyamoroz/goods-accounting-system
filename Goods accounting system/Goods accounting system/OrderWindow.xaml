@@ -9,7 +9,7 @@
     <Grid>
         <DataGrid x:Name="OrderDataGrid" Height="344" VerticalAlignment="Top" SelectedCellsChanged="OrderDataGrid_SelectedCellsChanged" />
         <Button x:Name="AddGoodBtn" Content="Buy" HorizontalAlignment="Left" Margin="135,364,0,0" VerticalAlignment="Top" Width="63" Click="AddGoodBtn_Click"/>
-        <TextBox x:Name="OrderTextBox" HorizontalAlignment="Left" Margin="10,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="OrderTextBox" HorizontalAlignment="Left" Margin="10,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

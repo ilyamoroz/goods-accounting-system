@@ -4,8 +4,9 @@ namespace Goods_accounting_system.DataModel
 {
     public class ShopDatabaseContext : DbContext
     {
-        public ShopDatabaseContext()
-            : base()
+
+        public ShopDatabaseContext(string connectionString)
+            : base(connectionString)
         {
         }
         public DbSet<Good> Goods { get; set; }

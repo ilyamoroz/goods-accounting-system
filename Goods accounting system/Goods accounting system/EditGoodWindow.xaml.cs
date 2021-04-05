@@ -1,6 +1,7 @@
 ﻿using Goods_accounting_system.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class EditGoodWindow : Window
     {
-        private DataBase db = new DataBase();
+        private DataBase db;
         Good good;
         private int GoodId;
         public EditGoodWindow()
@@ -28,6 +29,8 @@ namespace Goods_accounting_system
         public EditGoodWindow(int id)
         {
             InitializeComponent();
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
             GoodId = id;
             FillFields();
         }

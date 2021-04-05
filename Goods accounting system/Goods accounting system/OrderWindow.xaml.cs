@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Goods_accounting_system.DataModel;
 using System.Windows;
@@ -12,12 +13,13 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class OrderWindow : Window
     {
-        private ShopDatabaseContext context = new ShopDatabaseContext();
-        private DataBase db = new DataBase();
+        private DataBase db;
         
         public OrderWindow()
         {
             InitializeComponent();
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
             FillDataGrid();
         }
 
@@ -36,7 +38,7 @@ namespace Goods_accounting_system
 
                 if (amount > 0 && amount < 10000)
                 {
-                    List<Good> goods = context.Goods.ToList<Good>();
+                    List<Good> goods = db.GetGoods();
                     db.MakeOrder(goods[indexList.Last()].GoodID, amount);
                 }
             }
@@ -46,14 +48,7 @@ namespace Goods_accounting_system
                 OrderTextBox.Text = "";
             }
         }
-
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
-        }
-
-        private List<int> indexList = new List<int>(); 
-
+        private List<int> indexList = new List<int>();
         private void OrderDataGrid_SelectedCellsChanged(object sender, System.Windows.Controls.SelectedCellsChangedEventArgs e)
         {
             indexList.Add(OrderDataGrid.SelectedIndex);

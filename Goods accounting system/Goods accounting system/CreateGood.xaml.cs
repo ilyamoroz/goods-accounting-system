@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows;
+using Goods_accounting_system.DataModel;
 
 namespace Goods_accounting_system
 {
@@ -8,10 +10,12 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class CreateGood : Window
     {
-        private DataBase db = new DataBase();
+        private DataBase db;
         public CreateGood()
         {
             InitializeComponent();
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
             GoodProviderField.ItemsSource = db.FillComboBox();
         }
 
@@ -37,7 +41,6 @@ namespace Goods_accounting_system
                     MessageBox.Show("Enter correct values!");
                 }
             }
-            
         }
     }
 }

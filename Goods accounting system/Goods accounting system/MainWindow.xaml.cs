@@ -1,6 +1,7 @@
 ﻿using Goods_accounting_system.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -18,27 +19,27 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataBase db = new DataBase();
-
-        private ShopDatabaseContext context = new ShopDatabaseContext();
+        private DataBase _db;
 
         public MainWindow()
         {
+            
             InitializeComponent();
             Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File(@"../../../information.log").CreateLogger();
-            
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            _db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
             FillGoodsDataGrid();
             FillProvidersGrid();
         }
 
         private void FillGoodsDataGrid()
         {
-            GoodsDataGrid.ItemsSource = db.GetAllGoods();
+            GoodsDataGrid.ItemsSource = _db.GetAllGoods();
         }
 
         private void FillProvidersGrid()
         {
-            ProvidersDataGrid.ItemsSource = db.GetAllProviders();
+            ProvidersDataGrid.ItemsSource = _db.GetAllProviders();
         }
 
         private void CreateNewGoodButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +63,7 @@ namespace Goods_accounting_system
         {
             if (GoodsDataGrid.SelectedIndex >= 0)
             {
-                List<Good> goods = context.Goods.ToList();
+                List<Good> goods = _db.GetGoods();
                 EditGoodWindow edit = new EditGoodWindow(goods[GoodsDataGrid.SelectedIndex].GoodID);
                 edit.ShowDialog();
                 Log.Information("Edit good: {Name}", goods[GoodsDataGrid.SelectedIndex].Name);
@@ -74,8 +75,8 @@ namespace Goods_accounting_system
         {
             if (ProvidersDataGrid.SelectedIndex > 0)
             {
-                List<Provider> providers = context.Providers.ToList();
-                db.DeleteProvider(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                List<Provider> providers = _db.GetProviders();
+                _db.DeleteProvider(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
                 Log.Information("Deleted provider: {Name}", providers[ProvidersDataGrid.SelectedIndex].Name);
                 FillProvidersGrid();
             }
@@ -85,8 +86,8 @@ namespace Goods_accounting_system
         {
             if (GoodsDataGrid.SelectedIndex > 0)
             {
-                List<Good> goods = context.Goods.ToList<Good>();
-                db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
+                List<Good> goods = _db.GetGoods();
+                _db.DeleteGood(goods[GoodsDataGrid.SelectedIndex].GoodID);
                 Log.Information("Deleted good: {Name}", goods[GoodsDataGrid.SelectedIndex].Name);
                 FillGoodsDataGrid();
             }
@@ -96,7 +97,7 @@ namespace Goods_accounting_system
         {
             if (ProvidersDataGrid.SelectedIndex >= 0)
             {
-                List<Provider> providers = context.Providers.ToList();
+                List<Provider> providers = _db.GetProviders();
                 EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
                 edit.ShowDialog();
                 Log.Information("Edit provider: {Name}", providers[ProvidersDataGrid.SelectedIndex].Name);
@@ -132,10 +133,10 @@ namespace Goods_accounting_system
                     FillGoodsDataGrid();
                     break;
                 case "Avalible Goods":
-                    GoodsDataGrid.ItemsSource = db.GetAvailableGoods();
+                    GoodsDataGrid.ItemsSource = _db.GetAvailableGoods();
                     break;
                 case "Necessary goods":
-                    GoodsDataGrid.ItemsSource = db.GetNeedGoods();
+                    GoodsDataGrid.ItemsSource = _db.GetNeedGoods();
                     break;
                 case "Goods by provider":
                     ProviderNameField.IsEnabled = true;
@@ -146,12 +147,12 @@ namespace Goods_accounting_system
 
         private void ProviderNameField_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GoodsDataGrid.ItemsSource = db.GetGoodsByProvider(ProviderNameField.Text);
+            GoodsDataGrid.ItemsSource = _db.GetGoodsByProvider(ProviderNameField.Text);
         }
 
         private void btnMouseDown(object sender, RoutedEventArgs e)
         {
-            db.Create_Cart();
+            _db.Create_Cart();
             OrderWindow orderWindow = new OrderWindow();
             orderWindow.ShowDialog();
             Log.Information("Open cart");

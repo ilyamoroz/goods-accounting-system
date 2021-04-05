@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Goods_accounting_system.DataModel;
 
 namespace Goods_accounting_system
 {
@@ -17,10 +19,12 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class CreateProvider : Window
     {
-        private DataBase db = new DataBase();
+        private DataBase db;
         public CreateProvider()
         {
             InitializeComponent();
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
         }
 
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)

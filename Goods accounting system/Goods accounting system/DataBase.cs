@@ -5,10 +5,14 @@ using System.Linq;
 
 namespace Goods_accounting_system
 {
-    public class DataBase
+    public class DataBase : IDataBase
     {
-        private ShopDatabaseContext context = new ShopDatabaseContext();
+        private ShopDatabaseContext _context;
 
+        public DataBase(ShopDatabaseContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context)); 
+        }
         public void CreateNewGood(string name, int place, int amount, string provider)
         {
             Good good = new Good();
@@ -17,11 +21,11 @@ namespace Goods_accounting_system
             good.Amount = amount;
             if (provider.Length > 0)
             {
-                good.ProviderID = context.Providers.Single(x => x.Name == provider).ProviderID;
+                good.ProviderID = _context.Providers.Single(x => x.Name == provider).ProviderID;
             }
 
-            context.Goods.Add(good);
-            context.SaveChanges();
+            _context.Goods.Add(good);
+            _context.SaveChanges();
         }
         public void CreateNewProvider(string name, string address, string phoneNumber)
         {
@@ -29,13 +33,13 @@ namespace Goods_accounting_system
             provider.Name = name;
             provider.Address = address;
             provider.PhoneNumber = phoneNumber;
-            context.Providers.Add(provider);
-            context.SaveChanges();
+            _context.Providers.Add(provider);
+            _context.SaveChanges();
         }
         public IEnumerable<object> GetAllGoods()
         {
-            var s = from e in context.Goods
-                    join d in context.Providers
+            var s = from e in _context.Goods
+                    join d in _context.Providers
                         on e.ProviderID equals d.ProviderID
                     select new
                     {
@@ -48,7 +52,7 @@ namespace Goods_accounting_system
         }
         public IEnumerable<object> GetAllProviders()
         {
-            var s = from e in context.Providers
+            var s = from e in _context.Providers
                     select new
                     {
                         ProviderName = e.Name,
@@ -60,50 +64,50 @@ namespace Goods_accounting_system
         public void DeleteGood(int id)
         {
 
-            var s = context.Goods.Single(x => x.GoodID == id);
-            context.Goods.Remove(s);
-            context.SaveChanges();
+            var s = _context.Goods.Single(x => x.GoodID == id);
+            _context.Goods.Remove(s);
+            _context.SaveChanges();
         }
         public Good GetGoodByID(int id)
         {
-            var good = context.Goods.Single(x => x.GoodID == id);
+            var good = _context.Goods.Single(x => x.GoodID == id);
             return good;
         }
         public void EditGood(int id, string name, int place, int amount)
         {
             
-            var good = context.Goods.Single(x => x.GoodID == id);
+            var good = _context.Goods.Single(x => x.GoodID == id);
             good.Name = name;
             good.StoragePlace = place;
             good.Amount = amount;
-            context.SaveChanges();
+            _context.SaveChanges();
         
         }
         public void DeleteProvider(int id)
         {
-            var z = context.Providers.Single(x => x.ProviderID == id);
-            context.Providers.Remove(z);
-            context.SaveChanges();
+            var z = _context.Providers.Single(x => x.ProviderID == id);
+            _context.Providers.Remove(z);
+            _context.SaveChanges();
         }
         public Provider GetProviderByID(int id)
         {
-            var provider = context.Providers.Single(x => x.ProviderID == id);
+            var provider = _context.Providers.Single(x => x.ProviderID == id);
             return provider;
 
         }
         public void EditProvider(int id, string name, string address, string phone)
         {
-            var provider = context.Providers.Single(x => x.ProviderID == id);
+            var provider = _context.Providers.Single(x => x.ProviderID == id);
             provider.Name = name;
             provider.Address = address;
             provider.PhoneNumber = phone;
-            context.SaveChanges();
+            _context.SaveChanges();
         }
         public IEnumerable<object> GetAvailableGoods()
         {
-            var s = from e in context.Goods
+            var s = from e in _context.Goods
                 where e.Amount >= 1 
-                join d in context.Providers
+                join d in _context.Providers
                     on e.ProviderID equals d.ProviderID
                 select new
                 {
@@ -116,9 +120,9 @@ namespace Goods_accounting_system
         }
         public IEnumerable<object> GetNeedGoods()
         {
-            var s = from e in context.Goods
+            var s = from e in _context.Goods
                 where e.Amount <= 10
-                join d in context.Providers
+                join d in _context.Providers
                     on e.ProviderID equals d.ProviderID
                 select new
                 {
@@ -131,8 +135,8 @@ namespace Goods_accounting_system
         }
         public IEnumerable<object> GetGoodsByProvider(string provider)
         {
-            var s = from e in context.Goods
-                join d in context.Providers
+            var s = from e in _context.Goods
+                join d in _context.Providers
                     on e.ProviderID equals d.ProviderID
                 where d.Name.StartsWith(provider)
                 select new
@@ -144,28 +148,35 @@ namespace Goods_accounting_system
                 };
             return s.ToList();
         }
-
         public void Create_Cart()
         {
             Cart cart = new Cart();
             cart.Date = DateTime.Now.ToShortDateString();
-            context.Carts.Add(cart);
-            context.SaveChanges();
+            _context.Carts.Add(cart);
+            _context.SaveChanges();
         }
         public void MakeOrder(int goodID, int amount)
         {
-            var _cartID = context.Carts.ToList<Cart>().Last().CartID;
+            var _cartID = _context.Carts.ToList<Cart>().Last().CartID;
 
             Order order = new Order();
             order.GoodID = goodID;
             order.Amount = amount;
             order.CartId = _cartID;
-            context.Orders.Add(order);
-            context.SaveChanges();
+            _context.Orders.Add(order);
+            _context.SaveChanges();
         }
         public IEnumerable<object> FillComboBox()
         { 
-            return (from e in context.Providers select e.Name).ToList();
+            return (from e in _context.Providers select e.Name).ToList();
+        }
+        public List<Good> GetGoods()
+        {
+            return _context.Goods.ToList();
+        }
+        public List<Provider> GetProviders()
+        {
+            return _context.Providers.ToList();
         }
     }
 }

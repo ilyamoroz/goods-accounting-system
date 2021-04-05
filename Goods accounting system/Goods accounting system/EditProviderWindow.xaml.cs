@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,23 +19,21 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class EditProviderWindow : Window
     {
-        private DataBase db = new DataBase();
+        private DataBase _db;
         private Provider provider;
         private int ProviderId;
-        public EditProviderWindow()
-        {
-            InitializeComponent();
-        }
         public EditProviderWindow(int id)
         {
             InitializeComponent();
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
+            _db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
             ProviderId = id;
             FillFields();
         }
 
         private void FillFields()
         {
-            provider = db.GetProviderByID(ProviderId);
+            provider = _db.GetProviderByID(ProviderId);
             ProviderNameField.Text = provider.Name;
             ProviderAddressField.Text = provider.Address;
             ProviderPhoneNumberField.Text = provider.PhoneNumber;
@@ -42,7 +41,7 @@ namespace Goods_accounting_system
 
         private void EditProviderButton_Click(object sender, RoutedEventArgs e)
         {
-            db.EditProvider(ProviderId, ProviderNameField.Text, ProviderAddressField.Text, ProviderPhoneNumberField.Text);
+            _db.EditProvider(ProviderId, ProviderNameField.Text, ProviderAddressField.Text, ProviderPhoneNumberField.Text);
             this.Close();
         }
     }
