@@ -19,12 +19,12 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class CreateProvider : Window
     {
-        private DataBase db;
-        public CreateProvider()
+        private IDataBase _db;
+        public CreateProvider(IDataBase db)
         {
             InitializeComponent();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
+            _db = db;
         }
 
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)
@@ -35,7 +35,7 @@ namespace Goods_accounting_system
                 ProviderAddressField.Text.Length <= 50 &&
                 ProviderPhoneNumberField.Text.Length == 10)
             {
-                db.CreateNewProvider(ProviderNameField.Text,
+                _db.CreateNewProvider(ProviderNameField.Text,
                     ProviderAddressField.Text,
                     ProviderPhoneNumberField.Text);
             }

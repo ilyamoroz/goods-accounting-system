@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
+﻿using System.Configuration;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Goods_accounting_system.DataModel;
 
 namespace Goods_accounting_system
@@ -19,14 +9,14 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class EditProviderWindow : Window
     {
-        private DataBase _db;
+        private IDataBase _db;
         private Provider provider;
         private int ProviderId;
-        public EditProviderWindow(int id)
+        public EditProviderWindow(int id, IDataBase db)
         {
             InitializeComponent();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            _db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
+            _db = db;
             ProviderId = id;
             FillFields();
         }

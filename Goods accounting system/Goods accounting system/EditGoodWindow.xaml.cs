@@ -19,25 +19,25 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class EditGoodWindow : Window
     {
-        private DataBase db;
+        private IDataBase _db;
         Good good;
         private int GoodId;
         public EditGoodWindow()
         {
             InitializeComponent();
         }
-        public EditGoodWindow(int id)
+        public EditGoodWindow(int id, IDataBase db)
         {
             InitializeComponent();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
+            _db = db;
             GoodId = id;
             FillFields();
         }
 
         private void FillFields()
         {
-            good = db.GetGoodByID(GoodId);
+            good = _db.GetGoodByID(GoodId);
             GoodNameField.Text = good.Name;
             GoodPlaceField.Text = good.StoragePlace.ToString();
             GoodAmountField.Text = good.Amount.ToString();
@@ -45,7 +45,7 @@ namespace Goods_accounting_system
 
         private void SaveGoodButton_Click(object sender, RoutedEventArgs e)
         {
-            db.EditGood(GoodId, GoodNameField.Text, Convert.ToInt32(GoodPlaceField.Text), Convert.ToInt32(GoodAmountField.Text));
+            _db.EditGood(GoodId, GoodNameField.Text, Convert.ToInt32(GoodPlaceField.Text), Convert.ToInt32(GoodAmountField.Text));
             MessageBox.Show("Data Changed");
             GoodNameField.Text = "";
             GoodPlaceField.Text = "";

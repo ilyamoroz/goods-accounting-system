@@ -10,13 +10,13 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class CreateGood : Window
     {
-        private DataBase db;
-        public CreateGood()
+        private IDataBase _db;
+        public CreateGood(IDataBase db)
         {
             InitializeComponent();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
-            GoodProviderField.ItemsSource = db.FillComboBox();
+            _db = db;
+            GoodProviderField.ItemsSource = _db.FillComboBox();
         }
 
         private void CreateGoodButton_Click(object sender, RoutedEventArgs e)
@@ -30,7 +30,7 @@ namespace Goods_accounting_system
             {
                 if (GoodProviderField.Text.Length > 0)
                 {
-                    db.CreateNewGood(GoodNameField.Text,
+                    _db.CreateNewGood(GoodNameField.Text,
                         Convert.ToInt32(GoodPlaceField.Text),
                         Convert.ToInt32(GoodAmountField.Text),
                         GoodProviderField.Text);

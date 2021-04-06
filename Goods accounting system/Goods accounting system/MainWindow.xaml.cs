@@ -2,15 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.Printing;
 using System.Windows.Controls;
+using Autofac;
 using Serilog;
-
 
 namespace Goods_accounting_system
 {
@@ -19,7 +14,7 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataBase _db;
+        private IDataBase _db;
 
         public MainWindow()
         {
@@ -27,7 +22,12 @@ namespace Goods_accounting_system
             InitializeComponent();
             Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File(@"../../../information.log").CreateLogger();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            _db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
+
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<DataBaseModule>();
+            var container = containerBuilder.Build();
+            _db = container.Resolve<IDataBase>(new NamedParameter("context", new ShopDatabaseContext(settings.ConnectionString)));
+            
             FillGoodsDataGrid();
             FillProvidersGrid();
         }
@@ -44,7 +44,7 @@ namespace Goods_accounting_system
 
         private void CreateNewGoodButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateGood createGood = new CreateGood();
+            CreateGood createGood = new CreateGood(_db);
             createGood.ShowDialog();
             Log.Information("Created new good");
             
@@ -53,7 +53,7 @@ namespace Goods_accounting_system
 
         private void CreateNewProviderButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateProvider createProvider = new CreateProvider();
+            CreateProvider createProvider = new CreateProvider(_db);
             createProvider.ShowDialog();
             Log.Information("Created new provider");
             FillProvidersGrid();
@@ -64,7 +64,7 @@ namespace Goods_accounting_system
             if (GoodsDataGrid.SelectedIndex >= 0)
             {
                 List<Good> goods = _db.GetGoods();
-                EditGoodWindow edit = new EditGoodWindow(goods[GoodsDataGrid.SelectedIndex].GoodID);
+                EditGoodWindow edit = new EditGoodWindow(goods[GoodsDataGrid.SelectedIndex].GoodID, _db);
                 edit.ShowDialog();
                 Log.Information("Edit good: {Name}", goods[GoodsDataGrid.SelectedIndex].Name);
                 FillGoodsDataGrid();
@@ -98,7 +98,7 @@ namespace Goods_accounting_system
             if (ProvidersDataGrid.SelectedIndex >= 0)
             {
                 List<Provider> providers = _db.GetProviders();
-                EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID);
+                EditProviderWindow edit = new EditProviderWindow(providers[ProvidersDataGrid.SelectedIndex].ProviderID, _db);
                 edit.ShowDialog();
                 Log.Information("Edit provider: {Name}", providers[ProvidersDataGrid.SelectedIndex].Name);
                 FillProvidersGrid();
@@ -153,7 +153,7 @@ namespace Goods_accounting_system
         private void btnMouseDown(object sender, RoutedEventArgs e)
         {
             _db.Create_Cart();
-            OrderWindow orderWindow = new OrderWindow();
+            OrderWindow orderWindow = new OrderWindow(_db);
             orderWindow.ShowDialog();
             Log.Information("Open cart");
         }

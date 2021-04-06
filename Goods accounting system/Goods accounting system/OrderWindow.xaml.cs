@@ -13,20 +13,20 @@ namespace Goods_accounting_system
     /// </summary>
     public partial class OrderWindow : Window
     {
-        private DataBase db;
+        private IDataBase _db;
         
-        public OrderWindow()
+        public OrderWindow(IDataBase db)
         {
             InitializeComponent();
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["ShopDatabaseContext"];
-            db = new DataBase(new ShopDatabaseContext(settings.ConnectionString));
+            _db = db;
             FillDataGrid();
         }
 
 
         private void FillDataGrid()
         {
-            OrderDataGrid.ItemsSource = db.GetAllGoods();
+            OrderDataGrid.ItemsSource = _db.GetAllGoods();
 
         }
 
@@ -38,8 +38,8 @@ namespace Goods_accounting_system
 
                 if (amount > 0 && amount < 10000)
                 {
-                    List<Good> goods = db.GetGoods();
-                    db.MakeOrder(goods[indexList.Last()].GoodID, amount);
+                    List<Good> goods = _db.GetGoods();
+                    _db.MakeOrder(goods[indexList.Last()].GoodID, amount);
                 }
             }
             catch (Exception exception)
